@@ -8,18 +8,15 @@ class App extends React.Component {
     super(props);
     this.state = {
       cows: [],
-      description: null
+      description: null,
+      nameSubmit: null,
+      descriptionSubmit: null
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    fetch("http://127.0.0.1:3001/api/cows", {
-      headers: {
-        "Content-Type": "applications/json",
-        Accept: "application/json"
-      }
-    })
+    fetch("http://127.0.0.1:3001/api/cows")
       .then(response => {
         return response.json();
       })
@@ -41,20 +38,59 @@ class App extends React.Component {
     console.log(this.state);
   }
 
+  //add to state, submit name and submit description, functions that update the states submit name and description on change
+  //add a function that submits a post to the server with the states submitName and submitdescription when clicked
+
+  handleNameChange(event) {
+    this.setState({
+      nameSubmit: event.target.value
+    });
+  }
+
+  handleDescriptionChange(event) {
+    console.log(event.target.value);
+    this.setState({
+      descriptionSubmit: event.target.value
+    });
+    console.log(this.state.descriptionSubmit);
+  }
+
+  handleSubmit() {
+    fetch("http://127.0.0.1:3001/api/cows", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: this.state.nameSubmit,
+        description: this.state.descriptionSubmit
+      })
+    });
+  }
+
   render() {
     return (
       <div>
         <form>
           <div>
             <label>Cow Name</label>
-            <input type="text"></input>
+            <input
+              type="text"
+              onChange={event => {
+                this.handleNameChange(event);
+              }}
+            ></input>
           </div>
           <div>
             <label>Cow Description</label>
-            <input type="text"></input>
+            <input
+              type="text"
+              onChange={event => this.handleDescriptionChange(event)}
+            ></input>
           </div>
           <submit>
-            <button>Add a cow</button>
+            <button onClick={() => this.handleSubmit()}>Add a cow</button>
           </submit>
         </form>
         <div>
