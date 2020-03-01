@@ -18,12 +18,29 @@ app.get("/api/cows", (req, res) => {
 });
 
 app.post("/api/cows", (req, res) => {
-  console.log(req.body);
+  console.log(typeof req.body);
   //   console.log(req);
+  let cowName = req.body.name;
+  let cowDescription = req.body.description;
+  console.log(cowName, cowDescription);
   //insert data into cow table with db.query
+  db.query(
+    `INSERT INTO cows(name, description) VALUES("${cowName}","${cowDescription}")`,
+    error => {
+      console.log(error);
+    }
+  );
   res.send("a cow post");
 });
 
+// db.query(
+//     `INSERT INTO messages(message) VALUES("${newMessage}")`,
+//     (error, data) => {
+//       if (error) callback(error);
+//       else {
+//         // console.log("postdata", data);
+//         callback(null, data);
+//       }
 //cowRequest body: {name:'cowname', description:'the description of the cow'}
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
