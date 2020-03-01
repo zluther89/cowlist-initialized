@@ -3,9 +3,11 @@ const app = express();
 const port = 3001;
 const bodyParser = require("body-parser");
 const db = require("./dbConnect");
+const cors = require("cors");
 
 app.use(express.static("/"));
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -19,6 +21,7 @@ app.get("/api/cows", (req, res) => {
       let cowResults = data.map(({ name, description }) => {
         return { name, description };
       });
+      //   cowResults = JSON.stringify(cowResults);
       res.send(cowResults);
     }
   });
