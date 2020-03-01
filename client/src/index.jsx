@@ -1,13 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import CowList from "./cowlist";
+import CowDescription from "./cowdescription";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cows: []
+      cows: [],
+      description: null
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -30,18 +33,41 @@ class App extends React.Component {
       .catch(err => console.log(err));
   }
 
+  handleClick(cow) {
+    console.log("click");
+    this.setState({
+      description: cow.description
+    });
+    console.log(this.state);
+  }
+
   render() {
     return (
       <div>
-        <div>Hello World!</div>
-        {/* <form>
-          <input type="text"></input>
-          <submit></submit>
-        </form> */}
-        <div></div>
+        <form>
+          <div>
+            <label>Cow Name</label>
+            <input type="text"></input>
+          </div>
+          <div>
+            <label>Cow Description</label>
+            <input type="text"></input>
+          </div>
+          <submit>
+            <button>Add a cow</button>
+          </submit>
+        </form>
         <div>
-          test
-          <CowList Cows={this.state.cows} />
+          <div>
+            <h4>Cow Description</h4>
+          </div>
+          <CowDescription Description={this.state.description} />
+        </div>
+        <div>
+          <div>
+            <h1>Cow Names</h1>
+          </div>
+          <CowList Cows={this.state.cows} Handler={this.handleClick} />
         </div>
       </div>
     );
