@@ -2,18 +2,7 @@ import React from "react";
 
 import CowList from "./cowlist";
 
-class IndividualCow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentDescription: null
-    };
-  }
-
-  render() {
-    return <li>{this.props.Cow.name}</li>;
-  }
-}
+var IndividualCow = props => <li>{props.Cow.name}</li>;
 
 export default IndividualCow;
 
