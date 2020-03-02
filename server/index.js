@@ -27,6 +27,16 @@ app.get("/api/cows", (req, res) => {
   });
 });
 
+//need to test functionality
+app.put("api/cows", (req, res) => {
+  let cowSelector = req.body.name;
+  let cowDescriptionChanger = req.body.description;
+  db.query(
+    "UPDATE cows SET description = ${cowDescriptionChanger} WHERE name=${cowSelector}"
+  );
+  res.send("updated cow");
+});
+
 app.post("/api/cows", (req, res) => {
   let cowName = req.body.name;
   let cowDescription = req.body.description;
